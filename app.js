@@ -11,21 +11,79 @@ const state = {
   budget:{
     _parent:null,
     income:0,
-    availableFunds:0,
     totalSpent:0,
     categories: []
   },
   isEditing:false
 };
 
-const renderPage = state => {
 
+
+//state altering functions
+
+function addCategoryToState(category){
+  let categories = state.budget.categories;
+  categories.push(category)
+  renderCategories(categories);
 }
 
-const addCategory = (category) => {
-  state.categories.push(category)
+//check functions
+
+function checkForExistingCategory(newCategory){
+  let counter = 0;
+  state.budget.categories.forEach(function(category){
+    if(category.name===newCategory.name){    
+      counter++
+    }
+  })
+  if(counter>0){
+    $.toast({
+      heading: 'Error',
+      text: '  Category Exists',
+      showHideTransition: 'fade',
+      icon: 'error',
+      position: 'top-center'
+    })
+  }
+  else{
+   addCategoryToState(newCategory)
+   console.log(state)
+  }
 }
 
-//Event handlers
+//Event listeners
 
-$("#")
+$('#new-category-submit').on('click', createNewCategory)
+
+
+//Event Handlers
+
+function createNewCategory(event){
+  event.preventDefault();
+  const newCategory = {};
+  newCategory.type = $('#category-type').val().toLowerCase();
+  newCategory.name = $('#category-name').val().toLowerCase();
+  newCategory.amount = $('#category-amount').val().toLowerCase();
+  $('#budget-form')[0].reset()
+  checkForExistingCategory(newCategory);
+}
+
+//rendering functions
+
+function renderPage(state){
+  return
+}
+
+function renderCategories(categories){
+  $('.budget-container').html('');
+  for(let i=0; i<categories.length; i++){
+    const category = categories[i]
+    const templatedCategory = template(category)
+    if(category.type==='Expense'){
+      $('#expenses').append(templatedCategory);
+    }
+    else{
+      $('#savings').append(templatedCategory);
+    }
+  }
+}
