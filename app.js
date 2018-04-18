@@ -53,7 +53,7 @@ function checkForExistingCategory(newCategory){
 
 //Event listeners
 
-$('#new-category-submit').on('click', createNewCategory)
+$('#new-category-submit').on('click', createNewCategory);
 
 
 //Event Handlers
@@ -61,9 +61,9 @@ $('#new-category-submit').on('click', createNewCategory)
 function createNewCategory(event){
   event.preventDefault();
   const newCategory = {};
-  newCategory.type = $('#category-type').val().toLowerCase();
-  newCategory.name = $('#category-name').val().toLowerCase();
-  newCategory.amount = $('#category-amount').val().toLowerCase();
+  newCategory.type = $('#category-type').val();
+  newCategory.name = $('#category-name').val();
+  newCategory.amount = $('#category-amount').val();
   $('#budget-form')[0].reset()
   checkForExistingCategory(newCategory);
 }

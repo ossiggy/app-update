@@ -1,6 +1,7 @@
 *{
   box-sizing: border-box;
   margin: 0;
+  font-family: 'Didact Gothic', sans-serif;
 }
 
 input[type='number'] {
@@ -12,10 +13,63 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
+header{
+  background-color: #3C3CFB;
+}
+
 h1, h2{
   display:inline-block;
+  color: white;
+}
+
+h2{
+  font-size: 18px;
+}
+
+.title-container{
+  padding-bottom:5px;
 }
 
 button:hover{
   cursor: pointer;
+}
+
+.landing-page{
+  text-align: center;
+}
+
+#sign-in{
+  height:37px;
+  padding-top:5px;
+}
+
+#sign-in input{
+  font-size:14px;
+  height: 30px;
+  vertical-align: bottom;
+  padding:5px;
+  border-radius: 15px;
+  width: 150px;
+}
+
+#sign-in-submit{
+  height: 30px;
+  float:right;
+}
+
+ul{
+  list-style: none;
+}
+
+.card-name{
+  text-transform: capitalize;
+}
+
+.budget-card{
+  border: 1px solid black;
+  margin: 10px; 
+}
+
+.edit-income{
+  float: right;
 }
