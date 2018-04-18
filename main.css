@@ -3,6 +3,9 @@
   margin: 0;
   font-family: 'Didact Gothic', sans-serif;
 }
+body{
+  background-color: #C1C1C1;
+}
 
 input[type='number'] {
   -moz-appearance:textfield;
@@ -22,6 +25,12 @@ h1, h2{
   color: white;
 }
 
+.main-title{
+  padding:2px;
+  border: 3px solid #FFFFFF;
+  margin-top:5px;
+}
+
 h2{
   font-size: 18px;
 }
@@ -38,9 +47,81 @@ button:hover{
   text-align: center;
 }
 
+.info-section{
+  padding-top:10px;
+  width: 100%;
+}
+
+.info-section h2{
+  font-size: 40px;
+  height: 200px;
+  width:100%;
+  color: white;
+  padding: 20px;
+  padding-top:30px;
+  margin-bottom: 10px;
+  background: url("https://s3.amazonaws.com/captainkimo/wp-content/uploads/2015/01/Riviera-Beach-Sunset-at-Singer-Island-Florida.jpg");
+  background-position-x: -200px;
+  background-position-y: -220px;
+  border-radius: 2px;
+  box-shadow: 0px 2px 5px 0px black;
+  vertical-align: bottom;
+}
+
+.sign-up-area{
+  background-color: white;
+  height: 58.6%;
+  box-shadow: 0px 2px 5px 0px black;
+}
+
+.sign-up-area h3{
+  background-color: #3942FF;
+  font-size: 36px;
+  color: white;
+}
+
+.sign-up-area ul{
+  padding: 10px;
+  background-color: #3942FF;
+  text-shadow: 0 1px 1px black;
+}
+
+.sign-up-area li{
+  font-size: 28px;
+  color: white;
+}
+
+#last{
+  font-size: 34px;
+}
+
+h4{
+  font-size: 20px;
+  padding-top: 5px;
+}
+
+#sign-up-form input{
+  height: 30px;
+  margin: 3px;
+  font-size: 16px;
+}
+
+#sign-up-submit{
+  color: white;
+  height: 35px;
+  border-radius: 10px;
+  margin-top:3px;
+  width: 50%;
+  font-size: 18px;
+  background-color:#3942FF;
+}
+
 #sign-in{
   height:37px;
   padding-top:5px;
+  position: absolute;
+  top: 16px;
+  right: 10px;
 }
 
 #sign-in input{
@@ -54,7 +135,19 @@ button:hover{
 
 #sign-in-submit{
   height: 30px;
+  font-size: 16px;
+  width: 85px;
   float:right;
+  margin-left: 5px;
+  border-radius: 15px;
+}
+
+@media screen and (max-width:886px){
+  #sign-up-form{
+    max-width: 50%;
+    text-align:center;
+    margin-left: 25%;
+  }
 }
 
 ul{

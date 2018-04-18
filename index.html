@@ -12,7 +12,7 @@
   <body>
 
     <header class="col-12">
-      <div class="title-container col-6">
+      <div class="title-container">
         <h1 class="main-title">Budge My Life</h1>
         <h2 class="sub-title">Budgeting Made Simple</h2>
       </div>
@@ -24,22 +24,24 @@
     </header>
 
     <div class="landing-page col-12">
-      <section class="info-section col-10 offset-1">
-        <h2>Budge My Life is an app meant to simplify the creation of your budget</h2>
-          <ul class="col-12"><h3>Just enter:</h3>
-            <li>Monthly Income</li> 
-            <li>How much you pay in bills per month</li> 
-            <li>How much you want to save per month</li>
+      <section class="info-section">
+        <h2>Budge My Life is an app meant to simplify your budget</h2>
+        <div class=sign-up-area>
+          <ul class="col-12"><h3>All you have to do is enter :</h3>
+            <li>-Monthly Income</li> 
+            <li>-How much you pay in bills per month</li> 
+            <li>-How much you want to save per month</li>
+            <li id='last'>And you'll be on your way to saving smarter</li>
           </ul>
-        <h3>and you'll get a visual representation of where your money is going!</h3>
+          <form id="sign-up-form" class="col-4 offset-4">
+            <h4 class="col-12">Sign Up</h4>
+            <input class="col-12" type="email" placeholder="Email">
+            <input class="col-12" type="text" placeholder="Username">
+            <input class="col-12" type="password" placeholder="Password">
+            <button type="button" id="sign-up-submit">Submit</button>
+          </form>
+        </div>
       </section>
-      <form id="sign-up-form" class="col-4 offset-4">
-        <h3 class="col-12">Sign Up</h3>
-        <input class="col-12" type="email" placeholder="Email">
-        <input class="col-12" type="text" placeholder="Username">
-        <input class="col-12" type="password" placeholder="Password">
-        <button type="button" id="sign-up-submit">Submit</button>
-      </form>
     </div>
 
     <!-- <div class="finance-info-container col-10 offset-1">
