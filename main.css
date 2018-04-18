@@ -80,19 +80,19 @@ button:hover{
   color: white;
 }
 
-.sign-up-area ul{
+.list-container{
   padding: 10px;
   background-color: #3942FF;
   text-shadow: 0 1px 1px black;
 }
 
+.sign-up-area ul{
+  border: 3px solid white;
+}
+
 .sign-up-area li{
   font-size: 28px;
   color: white;
-}
-
-#last{
-  font-size: 34px;
 }
 
 h4{

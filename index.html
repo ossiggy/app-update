@@ -17,67 +17,52 @@
         <h2 class="sub-title">Budgeting Made Simple</h2>
       </div>
       <form id="sign-in">
-        <input type="text" class="form-input" placeholder="username">
-        <input type="text" class="form-input" placeholder="password">
-        <button type="button" id="sign-in-submit">Log In</button>
+        <input type="text" placeholder="username">
+        <input type="text"  placeholder="password">
+        <button type="button" id="sign-in-submit">Sign In</button>
       </form>
     </header>
 
-    <div class="landing-page col-12">
-      <section class="info-section">
-        <h2>Budge My Life is an app meant to simplify your budget</h2>
-        <div class=sign-up-area>
-          <ul class="col-12"><h3>All you have to do is enter :</h3>
-            <li>-Monthly Income</li> 
-            <li>-How much you pay in bills per month</li> 
-            <li>-How much you want to save per month</li>
-            <li id='last'>And you'll be on your way to saving smarter</li>
-          </ul>
-          <form id="sign-up-form" class="col-4 offset-4">
-            <h4 class="col-12">Sign Up</h4>
-            <input class="col-12" type="email" placeholder="Email">
-            <input class="col-12" type="text" placeholder="Username">
-            <input class="col-12" type="password" placeholder="Password">
-            <button type="button" id="sign-up-submit">Submit</button>
-          </form>
-        </div>
-      </section>
-    </div>
+    <div class="landing-page col-12"></div>
 
-    <!-- <div class="finance-info-container col-10 offset-1">
+    <div class="budget-page col-12">
 
-        <div class="income-contianer col-6">
-          <span id="income">Monthly Income: </span>
-          <button type="button" class="edit-income"><i class="fas fa-pen-square edit"></i></button>
-        </div>
-        <span class="col-6" id="amount-spent">Amount Spent: </span>
+      <div class="finance-info-container col-10 offset-1">
 
-      <form id="budget-form" class="col-8 offset-2">
-        <span class="col-12" id="directions">Add a new category:</span>
-        <select name="category-type" id="category-type">
-          <option value="Expense">Expense</option>
-          <option value="Savings">Savings</option>
-        </select>
-        <input type="text" id="category-name" placeholder="Name">
-        <input type="number" id="category-amount" placeholder="Amount">
-        <button type="button" id="new-category-submit"><i class="fas fa-check-square"></i></button>
-      </form>
+          <div class="income-contianer col-6">
+            <span id="income">Monthly Income: </span>
+            <button type="button" class="edit-income"><i class="fas fa-pen-square edit"></i></button>
+          </div>
+          <span class="col-6" id="amount-spent">Amount Spent: </span>
 
-    </div>
+        <form id="budget-form" class="col-8 offset-2">
+          <span class="col-12" id="directions">Add a new category:</span>
+          <select name="category-type" id="category-type">
+            <option value="Expense">Expense</option>
+            <option value="Savings">Savings</option>
+          </select>
+          <input type="text" id="category-name" placeholder="Name">
+          <input type="number" id="category-amount" placeholder="Amount">
+          <button type="button" id="new-category-submit"><i class="fas fa-check-square"></i></button>
+        </form>
 
-    <section class="budget-container col-10 offset-1" id="expenses"></section>
-    <section class="budget-container col-10 offset-1" id="savings"></section>
-
-    <script id="budget-template" type="text/x-handlebars-template">
-      <div class="budget-card col-10 offset-1">
-        <span class="card-name">{{name}}<span>
-        <span class="card-amount">{{amount}}</span>
-        <div class="button-container col-12">
-          <button class="edit-budget"><i class="fas fa-pen-square edit"></i></button>
-          <button class="delete-budget"><i class="fas fa-trash"></i></button>
-        </div>
       </div>
-    </script> -->
+
+      <section class="budget-container col-10 offset-1" id="expenses"></section>
+      <section class="budget-container col-10 offset-1" id="savings"></section>
+
+      <script id="budget-template" type="text/x-handlebars-template">
+        <div class="budget-card col-10 offset-1">
+          <span class="card-name">{{name}}<span>
+          <span class="card-amount">{{amount}}</span>
+          <div class="button-container col-12">
+            <button class="edit-budget"><i class="fas fa-pen-square edit"></i></button>
+            <button class="delete-budget"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      </script>
+
+    </div>
 
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
