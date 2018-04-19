@@ -40,6 +40,15 @@ function updateUser(object){
 
 //check functions
 
+function checkMenuState(){
+  if(state.menuOpen===true){
+    $('#drop-down-menu').show();
+  }
+  if(state.menuOpen===false){
+    $('#drop-down-menu').hide();
+  }
+}
+
 function checkForExistingCategory(newCategory){
   let counter = 0;
   state.budget.categories.forEach(function(category){
@@ -64,15 +73,16 @@ function checkForExistingCategory(newCategory){
 //Event listeners
 
 $(document).ready(renderStartPage);
-
+$('#drop-down-menu-button').on('click', toggleMenu)
 
 //Event Handlers
 
-function renderStartPage(){
-  setRoute('landing-page');
-  renderApp();
-  $('#sign-in-submit').on('click', extractUserData);
-};
+function toggleMenu(event){
+  event.preventDefault()
+  console.log(state.menuOpen)
+  state.menuOpen = !state.menuOpen
+  checkMenuState()
+}
 
 function extractUserData(event){
   event.preventDefault();
@@ -117,9 +127,8 @@ function userLogin(userData){
         userObject.username=res.username;
       });
 
-    updateUser(state, userObject);
-    setRoute(state, 'budget-page');
-    renderApp(state, PAGE_ELEMENTS);
+    updateUser(userObject);
+    renderStartPage();
   };
   
   const infoSettings = {
@@ -143,12 +152,26 @@ const PAGE_SOURCES = {
   'budget-page': $('#budget-page-template').html()
 };
 
+function renderStartPage(){
+  if(!state.user.username){
+    setRoute('landing-page');
+    renderApp();
+    $('#sign-in-submit').on('click', extractUserData);
+  }
+  if(state.user.username){
+    setRoute('budget-page');
+    renderApp();
+  }
+};
+
 function renderApp(){
   console.log('called')
   if(state.route ==='landing-page'){
     renderPage(PAGE_SOURCES[state.route]);
+    renderDropDownMenu()
   };
   if(state.route === 'budget-page'){
+    fetchBudget(state.user.userId);
     renderPage(PAGE_SOURCES[state.route]);
     renderCategories(state.budget.categories);
   }
@@ -160,6 +183,18 @@ function renderPage(source){
   const templatedPage = template(state)
   $('.page-content').html('');
   $('.page-content').append(templatedPage)
+}
+
+function renderDropDownMenu(){
+  $('.drop-down-menu-container').append(`<div id="drop-down-menu" class="col-4 offset-8" hidden="true"><div>`)
+  renderLoginForm();
+}
+
+function renderLoginForm(){
+  const source = $('#login-form-template').html();
+  const template = Handlebars.compile(source);
+  const templatedForm = template(state);
+  $('#drop-down-menu').append(templatedForm);
 }
 
 function renderCategories(categories){

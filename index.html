@@ -16,12 +16,10 @@
         <h1 class="main-title">Budge My Life</h1>
         <h2 class="sub-title">Budgeting Made Simple</h2>
       </div>
-      <form id="sign-in">
-        <input type="text" placeholder="username">
-        <input type="text"  placeholder="password">
-        <button type="button" id="sign-in-submit">Sign In</button>
-      </form>
+      <button id="drop-down-menu-button"><i class="fas fa-bars fa-3x"></i></button>
     </header>
+
+    <div class="drop-down-menu-container"></div>
 
     <div class="page-content col-12"></div>
 
@@ -73,7 +71,9 @@
 
       <section class="budget-container col-10 offset-1" id="expenses"></section>
       <section class="budget-container col-10 offset-1" id="savings"></section>
+      <button id="save-budget">Save</button>
     </script>
+
     <script id="budget-template" type="text/x-handlebars-template">
       <div class="budget-card col-10 offset-1">
         <span class="card-name">{{name}}<span>
@@ -85,10 +85,16 @@
       </div>
     </script>
 
+    <script id="login-form-template" type="text/x-handlebars-template">
+      <form id="sign-in">
+        <input type="text" placeholder="username">
+        <input type="password"  placeholder="password">
+        <button type="button" id="sign-in-submit">Sign In</button>
+      </form>
+      </script>
+    
     <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>

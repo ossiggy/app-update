@@ -25,6 +25,14 @@ h1, h2{
   color: white;
 }
 
+button:focus{
+  outline: none;
+}
+
+button:active{
+  transform: translateY(4px);
+}
+
 .main-title{
   padding:2px;
   border: 3px solid #FFFFFF;
@@ -54,26 +62,34 @@ button:hover{
 
 .info-section h2{
   font-size: 40px;
-  height: 400px;
+  height: 300px;
   width:100%;
   color: white;
   padding: 20px;
   padding-top:30px;
   margin-bottom: 10px;
-  background: url("https://s3.amazonaws.com/captainkimo/wp-content/uploads/2015/01/Riviera-Beach-Sunset-at-Singer-Island-Florida.jpg");
+  background: url("https://www.walldevil.com/wallpapers/a80/scenic-beach-sunset-wallpaper-images.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position-x: 0px;
-  background-position-y: 0px;
+  background-position-y: center;
   border-radius: 2px;
   box-shadow: 0px 2px 5px 0px black;
   text-align: center;
   vertical-align: bottom;
 }
 
+.list-container{
+  padding: 10px;
+  padding-top:50px;
+  padding-bottom: 50px;
+  background-color: #3942FF;
+  text-shadow: 0 1px 1px black;
+  text-align: center;
+}
+
 .sign-up-area{
   background-color: white;
-  height: 58.6%;
+  height: 95vh;
   box-shadow: 0px 2px 5px 0px black;
 }
 
@@ -81,15 +97,6 @@ button:hover{
   background-color: #3942FF;
   font-size: 36px;
   color: white;
-}
-
-.list-container{
-  padding: 10px;
-  padding-top:200px;
-  padding-bottom: 200px;
-  background-color: #3942FF;
-  text-shadow: 0 1px 1px black;
-  text-align: center;
 }
 
 .sign-up-area ul{
@@ -102,8 +109,11 @@ button:hover{
 }
 
 h4{
-  font-size: 20px;
-  padding-top: 5px;
+  color: #3942FF;
+  border: 3px solid #3942FF;
+  font-size: 40px;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 #sign-up-form{
@@ -111,9 +121,9 @@ h4{
 }
 
 #sign-up-form input{
-  height: 30px;
+  height: 50px;
   margin: 3px;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 #sign-up-submit{
@@ -129,27 +139,49 @@ h4{
 #sign-in{
   height:37px;
   padding-top:5px;
-  position: absolute;
-  top: 16px;
-  right: 10px;
 }
 
 #sign-in input{
-  font-size:14px;
-  height: 30px;
+  font-size:18px;
+  height: 50px;
   vertical-align: bottom;
   padding:5px;
-  border-radius: 15px;
-  width: 150px;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 #sign-in-submit{
-  height: 30px;
-  font-size: 16px;
-  width: 85px;
+  color: #3C3CFB;
+  height: 50px;
+  font-size: 20px;
+  width: 70%;
   float:right;
-  margin-left: 5px;
+  margin-left: auto;
+  margin-right: 35px;
   border-radius: 15px;
+}
+
+
+#drop-down-menu{
+  height: 200px;
+  position: absolute;
+  width: 250px;
+  top: 60px;
+  right: 0;
+  text-align: center;
+  background-color: #3C3CFB;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+#drop-down-menu-button{
+  color: white;
+  background-color: #3942FF;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 50px;
+  width: 50px
 }
 
 @media screen and (max-width:886px){
@@ -157,6 +189,12 @@ h4{
     max-width: 50%;
     text-align:center;
     margin-left: 25%;
+  }
+}
+
+@media screen and (max-width: 470px){
+  .sub-title{
+    display: none;
   }
 }
 
