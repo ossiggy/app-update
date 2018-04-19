@@ -112,7 +112,9 @@ h4{
   color: #3942FF;
   border: 3px solid #3942FF;
   font-size: 40px;
-  margin-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 10px;
+  margin-left: 2.5px;
   margin-bottom: 10px;
 }
 
