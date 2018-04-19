@@ -23,17 +23,40 @@
       </form>
     </header>
 
-    <div class="landing-page col-12"></div>
+    <div class="page-content col-12"></div>
 
-    <div class="budget-page col-12">
-
-      <div class="finance-info-container col-10 offset-1">
-
-          <div class="income-contianer col-6">
-            <span id="income">Monthly Income: </span>
-            <button type="button" class="edit-income"><i class="fas fa-pen-square edit"></i></button>
+    <script id="landing-page-template" type="text/x-handlebars-template">
+      <section class="info-section">
+          <h2>Budge My Life is an app meant to simplify your budget</h2>
+          <div class=sign-up-area>
+            <div class="list-container col-12">
+              <h3 class="col-12">All you have to enter is :</h3>
+              <ul class="col-8 offset-2">
+                <li>-Monthly Income</li> 
+                <li>-How much you pay in bills per month</li> 
+                <li>-How much you want to save per month</li>
+              </ul>
+              <h3 class="col-12">and you'll be on your way to saving smarter!</h3>
+            </div>
+            <form id="sign-up-form" class="col-4 offset-4">
+              <h4 class="col-12">Sign Up</h4>
+              <input class="col-12" type="email" placeholder="Email">
+              <input class="col-12" type="text" placeholder="Username">
+              <input class="col-12" type="password" placeholder="Password">
+              <button type="button" id="sign-up-submit">Submit</button>
+            </form>
           </div>
-          <span class="col-6" id="amount-spent">Amount Spent: </span>
+        </section>
+    </script>
+
+    <script id="budget-page-template" type="text/x-handlebars-template">
+      <div class="finance-info-container col-10 offset-1">
+          
+        <div class="income-contianer col-6">
+          <span id="income">Monthly Income: </span>
+          <button type="button" class="edit-income"><i class="fas fa-pen-square edit"></i></button>
+        </div>
+        <span class="col-6" id="amount-spent">Amount Spent: </span>
 
         <form id="budget-form" class="col-8 offset-2">
           <span class="col-12" id="directions">Add a new category:</span>
@@ -50,24 +73,22 @@
 
       <section class="budget-container col-10 offset-1" id="expenses"></section>
       <section class="budget-container col-10 offset-1" id="savings"></section>
-
-      <script id="budget-template" type="text/x-handlebars-template">
-        <div class="budget-card col-10 offset-1">
-          <span class="card-name">{{name}}<span>
-          <span class="card-amount">{{amount}}</span>
-          <div class="button-container col-12">
-            <button class="edit-budget"><i class="fas fa-pen-square edit"></i></button>
-            <button class="delete-budget"><i class="fas fa-trash"></i></button>
-          </div>
+    </script>
+    <script id="budget-template" type="text/x-handlebars-template">
+      <div class="budget-card col-10 offset-1">
+        <span class="card-name">{{name}}<span>
+        <span class="card-amount">{{amount}}</span>
+        <div class="button-container col-12">
+          <button class="edit-budget"><i class="fas fa-pen-square edit"></i></button>
+          <button class="delete-budget"><i class="fas fa-trash"></i></button>
         </div>
-      </script>
-
-    </div>
+      </div>
+    </script>
 
     <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>

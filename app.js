@@ -1,10 +1,5 @@
 // Each action re-renders page with updated state
 
-// Handlebars setup
-const source = $('#budget-template').html();
-const template = Handlebars.compile(source);
-
-
 // set state for DOM rendering
 const state = {
   user: {},
@@ -14,41 +9,44 @@ const state = {
     totalSpent:0,
     categories: []
   },
+  route: null,
   isEditing:false,
   menuOpen: false
 };
 
-
-
 //state altering functions
 
-function setRoute(state, route){
-  state.route = route;
-}
+function setRoute(route){
+  Object.assign(state, {
+    route: route
+  });
+};
 
-function addCategoryToState(state, category){
-  let categories = state.budget.categories;
-  categories.push(category)
-  renderCategories(categories);
-}
+function addCategoryToState(category){
+  Object.assign(state.budget, {
+    categories:[...state.budget.categories, {
+      type: category.type,
+      name: category.name,
+      amount: category.amount
+    }]
+  });
+};
 
-function updateUser(state, object){
-  let {userId, authToken, username} = object;
-  state.user.userId = userId;
-  state.user.authToken = authToken;
-  state.user.username = username;
-
-}
+function updateUser(object){
+  Object.assign(state, {
+    user: object
+  });
+};
 
 //check functions
 
-function checkForExistingCategory(state, newCategory){
+function checkForExistingCategory(newCategory){
   let counter = 0;
   state.budget.categories.forEach(function(category){
     if(category.name===newCategory.name){    
       counter++
-    }
-  })
+    };
+  });
   if(counter>0){
     $.toast({
       heading: 'Error',
@@ -56,28 +54,25 @@ function checkForExistingCategory(state, newCategory){
       showHideTransition: 'fade',
       icon: 'error',
       position: 'top-center'
-    })
+    });
   }
   else{
    addCategoryToState(newCategory)
-   console.log(state)
-  }
-}
+  };
+};
 
 //Event listeners
 
 $(document).ready(renderStartPage);
-$('header').on('click', 'sign-in-submit', extractUserData);
-$('#new-category-submit').on('click', createNewCategory);
 
 
 //Event Handlers
 
-function renderStartPage(event){
-  event.preventDefault();
-  setRoute(state, 'landing-page');
-  renderApp(state, PAGE_ELEMENTS);
-}
+function renderStartPage(){
+  setRoute('landing-page');
+  renderApp();
+  $('#sign-in-submit').on('click', extractUserData);
+};
 
 function extractUserData(event){
   event.preventDefault();
@@ -90,86 +85,96 @@ function extractUserData(event){
 };
 
 function createNewCategory(event){
-  event.preventDefault();
+  console.log('creating')
   const newCategory = {};
   newCategory.type = $('#category-type').val();
   newCategory.name = $('#category-name').val();
   newCategory.amount = $('#category-amount').val();
-  $('#budget-form')[0].reset()
-  checkForExistingCategory(state, newCategory);
-}
+  $('#budget-form')[0].reset();
+  checkForExistingCategory(newCategory);
+  renderApp();
+};
 
 //auth functions
 
 function userLogin(userData){
-
   const loginURL = '/api/auth/login';
+  const {username, password} = userData;
   
-    const {username, password} = formData;
+  function setHeader(req){
+    const encodedString = btoa(`${username}:${password}`);
+    req.setRequestHeader('Authorization', 'Basic ' + encodedString);
+  };
   
-    function setHeader(req){
-      const encodedString = btoa(`${username}:${password}`);
-      req.setRequestHeader('Authorization', 'Basic ' + encodedString);
-    }
-  
-    function handleSuccess(res){
-
-      const userObject = {
-        userId: res.id,
-        authToken:res.authToken
-      }
-  
-      $.get('api/users/'+userObject.userId)
-        .then(res => {
-          userObject.username=res.username;
-        });
-
-      updateUser(state, userObject);
-      setRoute(state, 'budget-page');
-      renderApp(state, PAGE_ELEMENTS);
-
-    }
-  
-    const infoSettings = {
-      url: loginURL,
-      type: 'POST',
-      beforeSend: setHeader,
-      data: formData,
-      success: handleSuccess,
-      error: function(err){
-        console.log(err);
-      }
+  function handleSuccess(res){
+    const userObject = {
+      userId: res.id,
+      authToken:res.authToken
     };
 
-    $.ajax(infoSettings);
+    $.get('api/users/'+userObject.userId)
+      .then(res => {
+        userObject.username=res.username;
+      });
+
+    updateUser(state, userObject);
+    setRoute(state, 'budget-page');
+    renderApp(state, PAGE_ELEMENTS);
+  };
+  
+  const infoSettings = {
+    url: loginURL,
+    type: 'POST',
+    beforeSend: setHeader,
+    data: formData,
+    success: handleSuccess,
+    error: function(err){
+      console.log(err);
+    }
+  };
+
+  $.ajax(infoSettings);
 }
 
 //rendering functions
 
-const PAGE_ELEMENTS = {
-  'landing-page': $('.landing-page'),
-  'budget-page': $('.budget-page')
-}
-
-function renderApp(state, elements){
-  Object.keys(elements).forEach(function(route){
-    elements[route].hide()
-  })
-  elements[state.route].show()
-  if(state.route==='.landing-page'){
-    renderLandingPage(state, element.find('.landing-page'));
+const PAGE_SOURCES = {
+  'landing-page': $('#landing-page-template').html(),
+  'budget-page': $('#budget-page-template').html()
 };
 
+function renderApp(){
+  console.log('called')
+  if(state.route ==='landing-page'){
+    renderPage(PAGE_SOURCES[state.route]);
+  };
+  if(state.route === 'budget-page'){
+    renderPage(PAGE_SOURCES[state.route]);
+    renderCategories(state.budget.categories);
+  }
+  $('#new-category-submit').on('click', createNewCategory);
+};
+
+function renderPage(source){
+  const template = Handlebars.compile(source);
+  const templatedPage = template(state)
+  $('.page-content').html('');
+  $('.page-content').append(templatedPage)
+}
+
 function renderCategories(categories){
+  console.log(categories)
+  const source = $('#budget-template').html();
+  const template = Handlebars.compile(source);
   $('.budget-container').html('');
   for(let i=0; i<categories.length; i++){
-    const category = categories[i]
-    const templatedCategory = template(category)
+    const category = categories[i];
+    const templatedCategory = template(category);
     if(category.type==='Expense'){
       $('#expenses').append(templatedCategory);
     }
     else{
       $('#savings').append(templatedCategory);
-    }
-  }
-}
+    };
+  };
+};

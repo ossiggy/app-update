@@ -54,17 +54,20 @@ button:hover{
 
 .info-section h2{
   font-size: 40px;
-  height: 200px;
+  height: 400px;
   width:100%;
   color: white;
   padding: 20px;
   padding-top:30px;
   margin-bottom: 10px;
   background: url("https://s3.amazonaws.com/captainkimo/wp-content/uploads/2015/01/Riviera-Beach-Sunset-at-Singer-Island-Florida.jpg");
-  background-position-x: -200px;
-  background-position-y: -220px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: 0px;
   border-radius: 2px;
   box-shadow: 0px 2px 5px 0px black;
+  text-align: center;
   vertical-align: bottom;
 }
 
@@ -82,8 +85,11 @@ button:hover{
 
 .list-container{
   padding: 10px;
+  padding-top:200px;
+  padding-bottom: 200px;
   background-color: #3942FF;
   text-shadow: 0 1px 1px black;
+  text-align: center;
 }
 
 .sign-up-area ul{
@@ -98,6 +104,10 @@ button:hover{
 h4{
   font-size: 20px;
   padding-top: 5px;
+}
+
+#sign-up-form{
+  text-align: center;
 }
 
 #sign-up-form input{
