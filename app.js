@@ -4,13 +4,15 @@
 const state = {
   user: {},
   budget:{
-    _parent:null,
-    income:0,
-    totalSpent:0,
+    _parent: null,
+    income: 0,
+    totalSpent: 0,
+    remaining: 0,
     categories: []
   },
   route: null,
-  isEditing:false,
+  incomeEditing: false,
+  categoryEditing: false,
   menuOpen: false
 };
 
@@ -30,7 +32,25 @@ function addCategoryToState(category){
       amount: category.amount
     }]
   });
+  budgetCalculations();
 };
+
+function budgetCalculations(){
+  let totalSpent = 0;
+  let remaining = 0;
+  const categories = state.budget.categories;
+  const income = parseInt(state.budget.income);
+  for(let i=0; i<categories.length; i++){
+    const amount = categories[i].amount
+    totalSpent = totalSpent + parseInt(amount);
+  }
+  remaining = income - totalSpent;
+  Object.assign(state.budget, {
+    income:income,
+    totalSpent:totalSpent,
+    remaining:remaining,
+  })
+}
 
 function updateUser(object){
   Object.assign(state, {
@@ -100,13 +120,94 @@ function extractUserData(event){
 
 function createNewCategory(event){
   const newCategory = {};
-  newCategory.type = $('#category-type').val();
-  newCategory.name = $('#category-name').val();
+  newCategory.type = $('#category-type').val().trim('');
+  newCategory.name = $('#category-name').val().trim('');
   newCategory.amount = $('#category-amount').val();
+  if(newCategory.name===''||newCategory.amount === ''){
+    $.toast({
+      heading: 'Error',
+      text: ' Cannot be blank',
+      showHideTransition: 'fade',
+      icon: 'error',
+      position: 'top-center'
+    });
+    return
+  }
   $('#budget-form')[0].reset();
   checkForExistingCategory(newCategory);
   renderApp();
 };
+
+function saveBudget(event){
+  event.preventDefault();
+  const budgetObject = state.budget;
+
+  console.log(budgetObject)
+
+  // $.ajax({
+  //   url: '/api/budgets',
+  //   type: 'PUT',
+  //   data: budgetObject,
+  //   success: handleSuccess,
+  //   error: function(err){
+  //     console.log(err);
+  //   }
+  // })
+
+};
+
+function editIncome(event){
+  event.preventDefault();
+  Object.assign(state, {incomeEditing:!state.incomeEditing})
+  if(state.incomeEditing){
+    $('#edit-income').html('<i class="fas fa-check-square fa-2x">');
+    $('#monthly-income-number').attr('contenteditable', 'true'); 
+  };
+  if(!state.incomeEditing){
+    $('#edit-income').html('<i class="fas fa-pen-square fa-2x">');
+    $('#monthly-income-number').attr('contenteditable', 'false');
+    state.budget.income = $('#monthly-income-number').html();
+    renderApp();
+  };
+};
+
+function editCategory(event){
+  event.preventDefault();
+  const categories = state.budget.categories;
+  const _this = $(this);
+  const cardName = _this.parent().siblings('.card-name').html()
+  const cardAmount = _this.parent().siblings('.card-amount');
+  const thisCategory = categories.find(function(card){return card.name===cardName});
+  Object.assign(state, {categoryEditing: !state.categoryEditing});
+  if(state.categoryEditing){
+    _this.html('<i class="fas fa-check-square fa-2x">');
+    cardAmount.attr('contenteditable', 'true');
+  };
+  if(!state.categoryEditing){
+    _this.html('<i class="fas fa-pen-square fa-2x">');
+    cardAmount.attr('contenteditable', 'false');
+    const newAmount = cardAmount.html();
+    Object.assign(thisCategory, {
+      amount: newAmount
+    });
+    renderApp();
+  }
+}
+
+function deleteCategory(event){
+  event.preventDefault();
+  const categories = state.budget.categories;
+  const _this = $(this);
+  const cardName = _this.parent().siblings('.card-name').html()
+  const index = categories.findIndex(function(card){return card.name===cardName});
+  if(index > -1){
+    categories.splice(index, 1);
+  }
+  Object.assign(state.budget, {
+    categories: categories
+  });
+  renderApp();
+}
 
 //auth functions
 
@@ -188,12 +289,15 @@ function renderPage(source){
 }
 
 function renderBudgetPage(){
+  budgetCalculations();
   renderPage(PAGE_SOURCES[state.route]);
+  renderIncomeInformation(state.budget);
   renderCategories(state.budget.categories);
   renderLogout();
 
   $('#new-category-submit').on('click', createNewCategory);
-  $('#save-budget').on('click', createBudgetObject);
+  $('#save-budget').on('click', saveBudget);
+  $('#edit-income').on('click', editIncome);
 }
 
 function renderDropDownMenu(){
@@ -227,6 +331,13 @@ function renderLoginForm(){
   $('#drop-down-menu').append(templatedForm);
 }
 
+function renderIncomeInformation(income){
+  const source = $('#finance-info-template').html();
+  const template = Handlebars.compile(source);
+  const templatedIncome = template(income);
+  $('.main-info-container').append(templatedIncome);
+}
+
 function renderCategories(categories){
   const source = $('#budget-template').html();
   const template = Handlebars.compile(source);
@@ -235,10 +346,12 @@ function renderCategories(categories){
     const category = categories[i];
     const templatedCategory = template(category);
     if(category.type==='Expense'){
-      $('#expenses').append(templatedCategory)
+      $('#expenses').append(templatedCategory);
     }
     else{
-      $('#savings').append(templatedCategory)
+      $('#savings').append(templatedCategory);
     }
   }
+  $('.edit-category').on('click', editCategory);
+  $('.delete-category').on('click', deleteCategory);
 }

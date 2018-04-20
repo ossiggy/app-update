@@ -1,0 +1,98 @@
+.landing-page{
+  text-align: center;
+}
+
+.info-section{
+  padding-top:10px;
+  width: 100%;
+}
+
+.info-section h2{
+  font-size: 40px;
+  height: 300px;
+  width:100%;
+  color: white;
+  padding: 20px;
+  padding-top:30px;
+  margin-bottom: 10px;
+  background: url("https://www.walldevil.com/wallpapers/a80/scenic-beach-sunset-wallpaper-images.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  border-radius: 2px;
+  box-shadow: 0px 2px 5px 0px black;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.list-container{
+  padding: 10px;
+  padding-top:50px;
+  padding-bottom: 50px;
+  background-color: #3942FF;
+  text-shadow: 0 1px 1px black;
+  text-align: center;
+}
+
+ul{
+  list-style: none;
+}
+
+.sign-up-area{
+  background-color: white;
+  height: 95vh;
+  box-shadow: 0px 2px 5px 0px black;
+}
+
+.sign-up-area h3{
+  background-color: #3942FF;
+  font-size: 36px;
+  color: white;
+}
+
+.sign-up-area ul{
+  border: 3px solid white;
+}
+
+.sign-up-area li{
+  font-size: 28px;
+  color: white;
+}
+
+h4{
+  color: #3942FF;
+  border: 3px solid #3942FF;
+  font-size: 40px;
+  padding-bottom: 5px;
+  margin-top: 10px;
+  margin-left: 2.5px;
+  margin-bottom: 10px;
+}
+
+#sign-up-form{
+  text-align: center;
+}
+
+#sign-up-form input{
+  height: 50px;
+  margin: 3px;
+  font-size: 20px;
+}
+
+#sign-up-submit{
+  color: white;
+  height: 50px;
+  border-radius: 10px;
+  margin-top:3px;
+  width: 50%;
+  font-size: 20px;
+  background-color:#3942FF;
+}
+
+@media screen and (max-width:886px){
+  #sign-up-form{
+    max-width: 50%;
+    text-align:center;
+    margin-left: 25%;
+  }
+}
