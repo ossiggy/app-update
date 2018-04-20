@@ -1,14 +1,17 @@
-.card-name{
-  text-transform: capitalize;
+.income-container, .funds, #budget-form, .budget-container, .save-budget-container, .label-container{
+  text-align: center;
 }
 
-.budget-card{
-  border: 1px solid black;
-  margin: 10px; 
+.finance-info-container{
+  color: #3C3CFB;
+  background-color: white;
+  margin-top: 10px; 
+  padding: 10px;
+  border: 5px solid #3C3CFB;
 }
 
-.edit-income{
-  float: right;
+.income-container{
+  font-size: 26px;
 }
 
 #monthly-income-number{
@@ -16,3 +19,52 @@
   min-width: 50px;
   padding: 2px;
 }
+
+#edit-income{
+  color: #3C3CFB;
+  border: 2px solid white;
+  background-color: white;
+  padding: 0;
+  vertical-align: bottom;
+}
+
+#amount-spent, #remaining-funds{
+  font-size: 24px;
+}
+
+#directions{
+  font-size: 22px;
+}
+
+.label-container{
+  margin-top: 10px;
+}
+
+.label{
+  color: white;
+  font-size: 24px;
+  vertical-align: middle;
+  height: 50px;
+  background-color: #3C3CFB;
+}
+
+.card-name{
+  text-transform: capitalize;
+}
+
+.budget-card{
+  border: 1px solid black;
+  margin-top: 10px;
+}
+
+.save-budget-container{
+  margin-top: 10px;
+}
+
+#save-budget{
+  font-size: 20px;
+  height: 50px;
+  width: 15%;
+  border-radius: 5px;
+}
+

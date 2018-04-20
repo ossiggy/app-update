@@ -32,7 +32,7 @@ function addCategoryToState(category){
       amount: category.amount
     }]
   });
-  budgetCalculations();
+  renderIncomeInformation(state.budget);
 };
 
 function budgetCalculations(){
@@ -133,9 +133,10 @@ function createNewCategory(event){
     });
     return
   }
-  $('#budget-form')[0].reset();
+  $('.category-input, textarea').val('')
   checkForExistingCategory(newCategory);
-  renderApp();
+  renderCategories(state.budget.categories);
+  renderIncomeInformation(state.budget);
 };
 
 function saveBudget(event){
@@ -160,14 +161,27 @@ function editIncome(event){
   event.preventDefault();
   Object.assign(state, {incomeEditing:!state.incomeEditing})
   if(state.incomeEditing){
-    $('#edit-income').html('<i class="fas fa-check-square fa-2x">');
+    $('#edit-income').html('<i class="fas fa-check-square fa-3x">');
     $('#monthly-income-number').attr('contenteditable', 'true'); 
   };
   if(!state.incomeEditing){
-    $('#edit-income').html('<i class="fas fa-pen-square fa-2x">');
+    $('#edit-income').html('<i class="fas fa-pen-square fa-3x">');
     $('#monthly-income-number').attr('contenteditable', 'false');
-    state.budget.income = $('#monthly-income-number').html();
-    renderApp();
+    let newAmount = Number($('#monthly-income-number').html());
+    if(isNaN(newAmount)){
+      $.toast({
+        heading: 'Error',
+        text: ' Must be a positive number',
+        showHideTransition: 'fade',
+        icon: 'error',
+        position: 'top-center'
+      });
+      newAmount = 0;
+    };
+    Object.assign(state.budget, {
+      income: newAmount
+    })
+    renderIncomeInformation(state.budget);
   };
 };
 
@@ -186,11 +200,22 @@ function editCategory(event){
   if(!state.categoryEditing){
     _this.html('<i class="fas fa-pen-square fa-2x">');
     cardAmount.attr('contenteditable', 'false');
-    const newAmount = cardAmount.html();
+    let newAmount = cardAmount.html();
+    if(isNaN(newAmont)){
+      $.toast({
+        heading: 'Error',
+        text: ' Must be a positive number',
+        showHideTransition: 'fade',
+        icon: 'error',
+        position: 'top-center'
+      });
+      newAmount = 0;
+    }
     Object.assign(thisCategory, {
       amount: newAmount
     });
-    renderApp();
+    renderIncomeInformation(state.budget);
+    renderCategories(state.budget.categories);
   }
 }
 
@@ -202,11 +227,12 @@ function deleteCategory(event){
   const index = categories.findIndex(function(card){return card.name===cardName});
   if(index > -1){
     categories.splice(index, 1);
-  }
+  };
   Object.assign(state.budget, {
     categories: categories
   });
-  renderApp();
+  renderIncomeInformation(state.budget);
+  renderCategories(state.budget.categories);
 }
 
 //auth functions
@@ -289,7 +315,6 @@ function renderPage(source){
 }
 
 function renderBudgetPage(){
-  budgetCalculations();
   renderPage(PAGE_SOURCES[state.route]);
   renderIncomeInformation(state.budget);
   renderCategories(state.budget.categories);
@@ -297,7 +322,6 @@ function renderBudgetPage(){
 
   $('#new-category-submit').on('click', createNewCategory);
   $('#save-budget').on('click', saveBudget);
-  $('#edit-income').on('click', editIncome);
 }
 
 function renderDropDownMenu(){
@@ -332,10 +356,13 @@ function renderLoginForm(){
 }
 
 function renderIncomeInformation(income){
+  budgetCalculations();
   const source = $('#finance-info-template').html();
   const template = Handlebars.compile(source);
   const templatedIncome = template(income);
+  $('.main-info-container').html('')
   $('.main-info-container').append(templatedIncome);
+  $('#edit-income').on('click', editIncome);
 }
 
 function renderCategories(categories){

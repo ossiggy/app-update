@@ -51,7 +51,7 @@
     </script>
 
     <script id="budget-page-template" type="text/x-handlebars-template">
-      <div class="finance-info-container col-10 offset-1">
+      <div class="finance-info-container col-12">
         <div class="main-info-container col-12"></div>
 
         <form id="budget-form" class="col-8 offset-2">
@@ -60,31 +60,41 @@
             <option value="Expense">Expense</option>
             <option value="Savings">Savings</option>
           </select>
-          <input type="text" id="category-name" placeholder="Name">
-          <input type="number" id="category-amount" placeholder="Amount">
+          <input type="text" id="category-name" class="category-input" placeholder="Name">
+          <input type="number" id="category-amount" class="category-input" placeholder="Amount">
           <button type="button" id="new-category-submit"><i class="fas fa-check-square"></i></button>
         </form>
 
       </div>
 
-      <section class="budget-container col-10 offset-1" id="expenses"></section>
-      <section class="budget-container col-10 offset-1" id="savings"></section>
-      <button id="save-budget" class="col-3 offset-4">Save</button>
+      <div id="expenses-container" class="label-container col-6">
+        <h3 class="label col-12">Expenses</h3>
+        <section class="budget-container col-12" id="expenses"></section>
+      </div>
+
+      <div id="savings-container" class="label-container col-6">
+        <h3 class="label col-12">Savings</h3>
+        <section class="budget-container col-6" id="savings"></section>
+      </div>
+
+      <div class="save-budget-container col-12">
+        <button id="save-budget">Save</button>
+      </div>
     </script>
 
     <script id="finance-info-template" type="text/x-handlebars-template">
-      <div class="income-contianer col-6">
+      <div class="income-container col-12">
         <span id="income">Monthly Income: $<div id="monthly-income-number">{{income}}</div></span>
-        <button type="button" id="edit-income"><i class="fas fa-pen-square fa-2x"></i></button>
+        <button type="button" id="edit-income"><i class="fas fa-pen-square fa-3x"></i></button>
       </div>
-        <span class="col-6" id="amount-spent">Amount Spent: ${{totalSpent}}</span>
-      <section id="remaining-funds" class="col-10 offset-1">Amount Remaining: ${{remaining}}</section>
+      <span class="funds col-6" id="amount-spent">Amount Spent: $ {{totalSpent}}</span>
+      <span class="funds col-6" id="remaining-funds">Amount Remaining: $ {{remaining}}</span>
     </script>
 
     <script id="budget-template" type="text/x-handlebars-template">
-      <div class="budget-card col-10 offset-1">
-        <section class="card-name">{{name}}</section>
-        <section class="card-amount">{{amount}}</section>
+      <div class="budget-card col-12">
+        <span class="card-name">{{name}}</span>
+        <span class="card-amount">{{amount}}</span>
         <div class="button-container col-12">
           <button class="edit-category"><i class="fas fa-pen-square fa-2x"></i></button>
           <button class="delete-category"><i class="fas fa-trash"></i></button>
