@@ -73,15 +73,19 @@ function checkForExistingCategory(newCategory){
 //Event listeners
 
 $(document).ready(renderStartPage);
-$('#drop-down-menu-button').on('click', toggleMenu)
+$('#menu-bars-container').mouseenter(toggleMenu);
 
 //Event Handlers
 
-function toggleMenu(event){
-  event.preventDefault()
-  console.log(state.menuOpen)
-  state.menuOpen = !state.menuOpen
-  checkMenuState()
+function toggleMenu(){
+  console.log(state.menuOpen);
+  state.menuOpen = !state.menuOpen;
+  checkMenuState();
+}
+
+function closeMenu(){
+  state.menuOpen = false;
+  checkMenuState();
 }
 
 function extractUserData(event){
@@ -95,7 +99,6 @@ function extractUserData(event){
 };
 
 function createNewCategory(event){
-  console.log('creating')
   const newCategory = {};
   newCategory.type = $('#category-type').val();
   newCategory.name = $('#category-name').val();
@@ -154,7 +157,9 @@ const PAGE_SOURCES = {
 
 function renderStartPage(){
   if(!state.user.username){
-    setRoute('landing-page');
+
+    setRoute('budget-page'); // TODO: change to landing page before ship
+
     renderApp();
     $('#sign-in-submit').on('click', extractUserData);
   }
@@ -165,17 +170,14 @@ function renderStartPage(){
 };
 
 function renderApp(){
-  console.log('called')
   if(state.route ==='landing-page'){
     renderPage(PAGE_SOURCES[state.route]);
-    renderDropDownMenu()
+    renderDropDownMenu();
   };
   if(state.route === 'budget-page'){
-    fetchBudget(state.user.userId);
-    renderPage(PAGE_SOURCES[state.route]);
-    renderCategories(state.budget.categories);
+    // fetchBudget(state.user.userId); TODO: hook up actions to server
+    renderBudgetPage();
   }
-  $('#new-category-submit').on('click', createNewCategory);
 };
 
 function renderPage(source){
@@ -185,9 +187,37 @@ function renderPage(source){
   $('.page-content').append(templatedPage)
 }
 
+function renderBudgetPage(){
+  renderPage(PAGE_SOURCES[state.route]);
+  renderCategories(state.budget.categories);
+  renderLogout();
+
+  $('#new-category-submit').on('click', createNewCategory);
+  $('#save-budget').on('click', createBudgetObject);
+}
+
 function renderDropDownMenu(){
-  $('.drop-down-menu-container').append(`<div id="drop-down-menu" class="col-4 offset-8" hidden="true"><div>`)
-  renderLoginForm();
+
+    $('#corner-container').html('');
+
+    $('#corner-container').append(`
+      <div id="menu-bars-container">
+        <i id="menu-bars" class="fas fa-bars fa-3x"></i>
+      </div>
+    `);
+
+    $('.drop-down-menu-container').append(`
+      <div id="drop-down-menu" class="col-4 offset-8" hidden="true"><div>
+    `);
+}
+
+
+function renderLogout(){
+  $('#corner-container').html('');
+
+  $('#corner-container').append(`
+    <button id="log-out-button">Log Out</button>
+  `);
 }
 
 function renderLoginForm(){
@@ -198,7 +228,6 @@ function renderLoginForm(){
 }
 
 function renderCategories(categories){
-  console.log(categories)
   const source = $('#budget-template').html();
   const template = Handlebars.compile(source);
   $('.budget-container').html('');
@@ -206,10 +235,10 @@ function renderCategories(categories){
     const category = categories[i];
     const templatedCategory = template(category);
     if(category.type==='Expense'){
-      $('#expenses').append(templatedCategory);
+      $('#expenses').append(templatedCategory)
     }
     else{
-      $('#savings').append(templatedCategory);
-    };
-  };
-};
+      $('#savings').append(templatedCategory)
+    }
+  }
+}

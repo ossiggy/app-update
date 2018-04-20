@@ -130,11 +130,11 @@ h4{
 
 #sign-up-submit{
   color: white;
-  height: 35px;
+  height: 50px;
   border-radius: 10px;
   margin-top:3px;
   width: 50%;
-  font-size: 18px;
+  font-size: 20px;
   background-color:#3942FF;
 }
 
@@ -169,21 +169,45 @@ h4{
   position: absolute;
   width: 250px;
   top: 60px;
-  right: 0;
+  right: -4px;
   text-align: center;
   background-color: #3C3CFB;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }
 
-#drop-down-menu-button{
-  color: white;
-  background-color: #3942FF;
-  position: absolute;
+#menu-bars{
   top: 5px;
   right: 5px;
   height: 50px;
-  width: 50px
+  width: 50px;
+  margin-right:7px;
+}
+
+#menu-bars, #log-out-button{
+  color: white;
+  border: 2px solid white;
+  background-color: #3942FF;
+  position: absolute;
+}
+
+#log-out-button{
+  font-size: 15px;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  height: 30px;
+  width: 100px;
+}
+
+#log-out-button:hover{
+  color: lightgray;
+  border: 2px solid lightgray;
+}
+
+#menu-bars:hover{
+  cursor: pointer;
+  color: lightgray;
 }
 
 @media screen and (max-width:886px){
