@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+[contenteditable="true"]{
+  border: 1px solid #3C3CFB;
+}
+
 .finance-info-container{
   color: #3C3CFB;
   background-color: white;
@@ -20,12 +24,16 @@
   padding: 2px;
 }
 
-#edit-income{
+#edit-income, #new-category-submit, .button-container button{
   color: #3C3CFB;
   border: 2px solid white;
   background-color: white;
   padding: 0;
   vertical-align: bottom;
+}
+
+#edit-income:hover, #new-category-submit:hover{
+  color: #4EAA4E;
 }
 
 #amount-spent, #remaining-funds{
@@ -34,6 +42,21 @@
 
 #directions{
   font-size: 22px;
+}
+
+#new-category-submit{
+  display: inline-block;
+  height: 34px;
+}
+
+#budget-form input, select{
+  font-size: 18px;
+  height: 30px;
+  vertical-align: bottom;
+}
+
+select{
+  color: #3C3CFB;
 }
 
 .label-container{
@@ -48,13 +71,43 @@
   background-color: #3C3CFB;
 }
 
+.budget-container{
+  background-color: white;
+}
+
+.card-name, .card-amount{
+  display: inline-block;
+  text-align: center;
+}
+
 .card-name{
   text-transform: capitalize;
 }
 
+.card-amount{
+  min-width: 10px;
+}
+
 .budget-card{
-  border: 1px solid black;
+  color: #3C3CFB;
+  font-size: 28px;
+  border: 2px solid #3C3CFB;
   margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+  padding: 10px
+}
+
+.button-container button{
+  float: right;
+}
+
+.edit-category:hover{
+  color: #4EAA4E;
+}
+
+.delete-category:hover{
+  color: #B73D3D;
 }
 
 .save-budget-container{

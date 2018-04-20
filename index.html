@@ -62,7 +62,7 @@
           </select>
           <input type="text" id="category-name" class="category-input" placeholder="Name">
           <input type="number" id="category-amount" class="category-input" placeholder="Amount">
-          <button type="button" id="new-category-submit"><i class="fas fa-check-square"></i></button>
+          <button type="button" id="new-category-submit"><i class="fas fa-check-square fa-3x"></i></button>
         </form>
 
       </div>
@@ -74,7 +74,7 @@
 
       <div id="savings-container" class="label-container col-6">
         <h3 class="label col-12">Savings</h3>
-        <section class="budget-container col-6" id="savings"></section>
+        <section class="budget-container col-12" id="savings"></section>
       </div>
 
       <div class="save-budget-container col-12">
@@ -93,11 +93,13 @@
 
     <script id="budget-template" type="text/x-handlebars-template">
       <div class="budget-card col-12">
-        <span class="card-name">{{name}}</span>
-        <span class="card-amount">{{amount}}</span>
-        <div class="button-container col-12">
-          <button class="edit-category"><i class="fas fa-pen-square fa-2x"></i></button>
-          <button class="delete-category"><i class="fas fa-trash"></i></button>
+        <div class="card-info-container col-6">
+          <div class="card-name col-6">{{name}}</div>
+          <div class="card-amount col-6">{{amount}}</div>
+        </div>
+        <div class="button-container col-6">
+          <button class="delete-category col-6"><i class="fas fa-trash fa-3x"></i></button>
+          <button class="edit-category col-6"><i class="fas fa-pen-square fa-3x"></i></button>
         </div>
       </div>
     </script>

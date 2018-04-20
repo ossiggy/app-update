@@ -189,19 +189,19 @@ function editCategory(event){
   event.preventDefault();
   const categories = state.budget.categories;
   const _this = $(this);
-  const cardName = _this.parent().siblings('.card-name').html()
-  const cardAmount = _this.parent().siblings('.card-amount');
+  const cardName = _this.parent().siblings().children('.card-name').html();
+  const cardAmount = _this.parent().siblings().children('.card-amount');
   const thisCategory = categories.find(function(card){return card.name===cardName});
   Object.assign(state, {categoryEditing: !state.categoryEditing});
   if(state.categoryEditing){
-    _this.html('<i class="fas fa-check-square fa-2x">');
+    _this.html('<i class="fas fa-check-square fa-3x">');
     cardAmount.attr('contenteditable', 'true');
   };
   if(!state.categoryEditing){
-    _this.html('<i class="fas fa-pen-square fa-2x">');
+    _this.html('<i class="fas fa-pen-square fa-3x">');
     cardAmount.attr('contenteditable', 'false');
     let newAmount = cardAmount.html();
-    if(isNaN(newAmont)){
+    if(isNaN(newAmount)){
       $.toast({
         heading: 'Error',
         text: ' Must be a positive number',
@@ -223,7 +223,7 @@ function deleteCategory(event){
   event.preventDefault();
   const categories = state.budget.categories;
   const _this = $(this);
-  const cardName = _this.parent().siblings('.card-name').html()
+  const cardName = _this.parent().siblings().children('.card-name').html()
   const index = categories.findIndex(function(card){return card.name===cardName});
   if(index > -1){
     categories.splice(index, 1);
