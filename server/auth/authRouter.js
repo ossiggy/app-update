@@ -4,7 +4,6 @@ const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-const Cookies = require('cookies-js');
 
 const config = require('../config');
 
@@ -21,13 +20,14 @@ const router = express.Router();
 const localAuth = passport.authenticate('local', {session: false});
 router.use(bodyParser.json());
 router.post('/login', localAuth, (req, res) => {
-    console.log('made it')
     const authToken = createAuthToken(req.user.apiRepr());
-    const {id} = req.user.apiRepr();
-
-    Cookies.set('authToken', authToken).set('userId', id);
+    const {id, username} = req.user.apiRepr();
     
-    // res.json({authToken, id});
+    res.cookie('userId', id);
+    res.cookie('authToken', authToken);
+    res.cookie('username', username);
+    
+    res.json({username});
   }
 );
 
@@ -39,5 +39,12 @@ router.post(
     res.json({authToken});
   }
 );
+
+router.get('/logout', (req, res) => {
+  res.clearCookie('userId');
+  res.clearCookie('authToken');
+  res.clearCookie('username');
+  res.send();
+})
 
 module.exports = {router};

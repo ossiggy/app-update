@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 const {app, runServer, closeServer} = require('../server')
 const {DATABASE_URL} = require('../config')
 const {TEST_DATABASE_URL} = require('../config')
-const {Budget, Category} = require('../budgets/models')
+const {Budget} = require('../budgets/models')
 
 const testID = new ObjectID();
 
@@ -23,12 +23,6 @@ const mockBudget = {
   availableIncome: faker.random.number(),
   weeklyIncome: faker.random.number(),
   categories:[]
-}
-
-const mockCategory = {
-  amount: faker.random.number(),
-  name: faker.lorem.word(),
-  table: faker.lorem.word()
 }
 
 function tearDownDb() {
@@ -47,9 +41,6 @@ function seedBudgetData() {
   return Budget.create(Object.assign(mockBudget, { _parent: new ObjectID()}))
     .then(
       budget =>{
-        return Category.create(
-          Object.assign(mockCategory, { _parent: budget._id})
-        )
           .then(
             category => budget.update({$push: {'categories': {_id: category._id}}}, {safe: true, upsert: true, new: true})
           );
@@ -105,13 +96,4 @@ describe('Budge My Life', function(){
       });
   });
 
-  it('Should add budgets on POST', function(){
-    const newBudget = {_parent: new ObjectID, availableIncome: 1250, weeklyIncome: 1500, categories: [{table: "vertical-1", name: "dogs", amount: 130}]}
-    return chai.request(app)
-      .post('/budgets')
-      .send(newBudget)
-      .then(function(res){
-        res.should.have.status(204);
-      });
-  });
 });

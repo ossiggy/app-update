@@ -29,7 +29,7 @@ function addCategoryToState(category){
     categories:[...state.budget.categories, {
       type: category.type,
       name: category.name,
-      amount: category.amount
+      amount: parseInt(category.amount)
     }]
   });
   renderIncomeInformation(state.budget);
@@ -165,13 +165,17 @@ function createNewCategory(event){
 
 function saveBudget(event){
   event.preventDefault();
-  const budgetObject = state.budget;
+  const budgetObject = JSON.stringify(state.budget);
 
+  function setHeader(req){
+    req.setRequestHeader('Content-type', 'application/json')
+  }
 
   $.ajax({
     url: '/api/budgets',
     type: 'PUT',
     data: budgetObject,
+    beforeSend: setHeader,
     success: handleSuccess,
     error: function(err){
       console.log(err);
@@ -270,12 +274,8 @@ function userLogin(userData){
   const {username, password} = userData;
 
   function handleSuccess(res){
-    $.get('api/users/')
-      .then(res => {
-        userObject.username=res.username;
-      });
-
-    updateUser(userObject);
+    toggleMenu();
+    updateUser({username});
     setRoute('budget-page');
     renderApp();
   };
@@ -302,14 +302,15 @@ const PAGE_SOURCES = {
 };
 
 function renderStartPage(){
-  if(!state.user.username){
+  username = Cookies.get('username')
+  if(!username){
 
     setRoute('landing-page'); // TODO: change to landing page before ship
     renderApp();
     $('#sign-in-submit').on('click', extractUserData);
     $('#sign-up-submit').on('click', prepUserObject)
   }
-  if(state.user.username){
+  if(username){
     setRoute('budget-page');
     renderApp();
   }
@@ -334,17 +335,19 @@ function renderPage(source){
 }
 
 function renderBudgetPage(){
-  renderPage(PAGE_SOURCES[state.route]);
-  $.getJSON('/api/budgets', function(response){
-    console.log(response)
-	})
-  renderIncomeInformation(state.budget);
-  renderCategories(state.budget.categories);
-  renderLogout();
-
-  $('#new-category-submit').on('click', createNewCategory);
-  $('#save-budget').on('click', saveBudget);
-}
+  userId = Cookies.get('userId')
+  $.getJSON('/api/budgets', {cookie: userId}, function(res){
+    Object.assign(state.budget, res)
+  }).then(() => {
+    console.log(state.budget);
+    renderPage(PAGE_SOURCES[state.route]);
+    renderIncomeInformation(state.budget);
+    renderCategories(state.budget.categories);
+    renderLogout();
+    $('#new-category-submit').on('click', createNewCategory);
+    $('#save-budget').on('click', saveBudget);
+  });
+};
 
 function renderDropDownMenu(){
 

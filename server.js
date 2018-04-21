@@ -47,20 +47,6 @@ app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/budgets/', budgetRouter);
 
-app.get(
-  '/api/protected',
-  passport.authenticate('jwt', {session: false}),
-  (req, res) => {
-    return res.json({
-      data: 'data here'
-    });
-  }
-);
-
-app.get('/budget', (req, res) => {
-  res.sendFile('index.html', {root: __dirname + '/public'});
-});
-
 app.use('*', function(req, res){
   res.status(404).json({message: 'Not found'});
 });

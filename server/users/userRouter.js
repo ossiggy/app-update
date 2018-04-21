@@ -1,18 +1,17 @@
 const express = require('express')
 const passport = require('passport')
 const bodyParser = require('body-parser')
-const Cookies = require('cookies-js');
 
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
 
 const {User} = require('./models');
-const {Budget, Category} = require('./')
+const {Budget} = require('./')
 
 router.get('/', (req, res) => {
 
-  const userId = Cookies.get(userId);
+  const userId = req.cookies.userId;
 
   User
     .findById(userId)
