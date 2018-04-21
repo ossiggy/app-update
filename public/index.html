@@ -29,7 +29,7 @@
     <script id="landing-page-template" type="text/x-handlebars-template">
       <section class="info-section">
           <h2>Budge My Life is an app meant to simplify your budget</h2>
-          <div class=sign-up-area>
+          <div class="sign-up-area">
             <div class="list-container col-12">
               <h3 class="col-12">All you have to enter is :</h3>
               <ul class="col-8 offset-2">
@@ -41,9 +41,9 @@
             </div>
             <form id="sign-up-form" class="col-4 offset-4">
               <h4 class="col-12">Sign Up</h4>
-              <input class="col-12" type="email" placeholder="Email">
-              <input class="col-12" type="text" placeholder="Username">
-              <input class="col-12" type="password" placeholder="Password">
+              <input class="col-12" id="sign-up-email" type="email" placeholder="Email">
+              <input class="col-12" id="sign-up-username" type="text" placeholder="Username">
+              <input class="col-12" id="sign-up-password" type="password" placeholder="Password">
               <button type="button" id="sign-up-submit">Submit</button>
             </form>
           </div>
@@ -106,8 +106,8 @@
 
     <script id="login-form-template" type="text/x-handlebars-template">
       <form id="sign-in">
-        <input type="text" placeholder="username">
-        <input type="password"  placeholder="password">
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password"  placeholder="password">
         <button type="button" id="sign-in-submit">Sign In</button>
       </form>
       </script>

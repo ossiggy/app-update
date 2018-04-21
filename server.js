@@ -12,7 +12,7 @@ require('dotenv').config();
 
 const {router: usersRouter} = require('./server/users');
 const {router: budgetRouter} = require('./server/budgets');
-const {router: authRouter, basicStrategy, jwtStrategy} = require('./server/auth');
+const {router: authRouter, localStrategy, jwtStrategy} = require('./server/auth');
 
 const {DATABASE_URL, PORT} = require('./server/config');
 
@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
 mongoose.Promise=global.Promise;
 
 app.use(passport.initialize());
-passport.use(basicStrategy);
+passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 app.use('/api/users/', usersRouter);

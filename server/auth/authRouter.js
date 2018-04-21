@@ -3,6 +3,8 @@
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
+const Cookies = require('cookies-js');
 
 const config = require('../config');
 
@@ -16,14 +18,16 @@ const createAuthToken = user => {
 
 const router = express.Router();
 
-router.post(
-  '/login',
-  passport.authenticate('basic', {session: false}),
-  (req, res) => {
+const localAuth = passport.authenticate('local', {session: false});
+router.use(bodyParser.json());
+router.post('/login', localAuth, (req, res) => {
+    console.log('made it')
     const authToken = createAuthToken(req.user.apiRepr());
     const {id} = req.user.apiRepr();
+
+    Cookies.set('authToken', authToken).set('userId', id);
     
-    res.json({authToken, id});
+    // res.json({authToken, id});
   }
 );
 

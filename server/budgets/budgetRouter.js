@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-const cookieParser = require('cookie-parser');
+const Cookies = require('cookies-js');
 
 const router = express.Router();
 const {Budget, Category} = require('./models')
@@ -14,9 +14,11 @@ mongoose.Promise=global.Promise;
 
 router.get('/', (req, res) => {
 
+  const userId = Cookies.get(userId)
+
   if(!Budget){
     Budget.create({
-      _parent: req.params.userId,
+      _parent: userId,
       income: 0,
       totalSpent: 0,
       remaining: 0,
@@ -30,27 +32,20 @@ router.get('/', (req, res) => {
     })
   }
   else{
-    Budget.findOne({'_parent': req.cookies.userId}, {}, {sort: {'_id':-1}})
-    .populate('categories')
-      .exec(function(err, categories){
-        if(err) return "error";
-      })
-      .then(
-        budget => res.json(budget.apiRepr()))
-      .catch(err => {
-        console.error(err);
-        res.status(500).json({error: 'something went wrong'})
-      })
+    Budget
+    .find({'_parent': userId})
+    .then(
+      budget => res.json(budget.apiRepr()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({error: 'something went wrong'})
+    })
     }
 });
 
-router.put('/:id', jsonParser, (req, res) => {
-  if(!(req.params.id === req.body.id)){
-    const message = (
-      `Request patch id (${req.params.id} and request body id (${req.body.id}) must match)`)
-      console.error(message)
-      res.status(400).json({message: message})
-  }
+router.put('/', jsonParser, (req, res) => {
+
+  const userId = Cookies.get(userId)
 
   const toUpdate = {}
   const updateableFields = ['income', 'remaining', 'totalSpent',  'categories.name', 'categories.amount', 'categories']
@@ -62,7 +57,7 @@ router.put('/:id', jsonParser, (req, res) => {
   })
 
   Budget
-    .findOneAndUpdate({_parent:req.params.userId}, {$set: toUpdate}, {new: true})
+    .findOneAndUpdate({_parent:userId}, {$set: toUpdate}, {new: true})
     .exec()
     .then(post => res.status(204).end())
     .catch(err => res.status(500).json({message: 'Internal server error'}))

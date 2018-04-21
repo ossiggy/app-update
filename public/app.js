@@ -116,6 +116,32 @@ function extractUserData(event){
   userLogin(formData);
 };
 
+function prepUserObject(event){
+  event.preventDefault();
+  newUser = {};
+  newUser.username = $('#sign-up-username').val().trim('');
+  newUser.password = $('#sign-up-password').val();
+  newUser.email = $('#sign-up-email').val();
+  console.log(newUser)
+
+  const infoSettings = {
+    url: '/api/users/',
+    type: 'POST',
+    contentType: 'application/json',
+    success: handleSuccess,
+    data: JSON.stringify(newUser),
+    error: function(err){
+      console.log(err)
+    }
+  };
+
+  function handleSuccess(){
+    userLogin(newUser.username, newUser.password);
+  }
+
+  $.ajax(infoSettings)
+}
+
 function createNewCategory(event){
   const newCategory = {};
   newCategory.type = $('#category-type').val().trim('');
@@ -141,7 +167,6 @@ function saveBudget(event){
   event.preventDefault();
   const budgetObject = state.budget;
 
-  console.log(budgetObject)
 
   $.ajax({
     url: '/api/budgets',
@@ -240,41 +265,33 @@ function deleteCategory(event){
 //auth functions
 
 function userLogin(userData){
+  const data = JSON.stringify(userData)
   const loginURL = '/api/auth/login';
   const {username, password} = userData;
-  
-  function setHeader(req){
-    const encodedString = btoa(`${username}:${password}`);
-    req.setRequestHeader('Authorization', 'Basic ' + encodedString);
-  };
-  
-  function handleSuccess(res){
-    const userObject = {
-      userId: res.id,
-      authToken:res.authToken
-    };
 
-    $.get('api/users/'+userObject.userId)
+  function handleSuccess(res){
+    $.get('api/users/')
       .then(res => {
         userObject.username=res.username;
       });
 
     updateUser(userObject);
-    renderStartPage();
-  };
-  
-  const infoSettings = {
-    url: loginURL,
-    type: 'POST',
-    beforeSend: setHeader,
-    data: formData,
-    success: handleSuccess,
-    error: function(err){
-      console.log(err);
-    }
+    setRoute('budget-page');
+    renderApp();
   };
 
-  $.ajax(infoSettings);
+  function setHeader(req){
+    req.setRequestHeader('Content-type', 'application/json')
+  }
+  
+  const infoSettings = {
+    type: 'POST',
+    url: loginURL,
+    data: data,
+    beforeSend: setHeader,
+    success:handleSuccess
+  };
+  $.ajax(infoSettings)
 }
 
 //rendering functions
@@ -290,6 +307,7 @@ function renderStartPage(){
     setRoute('landing-page'); // TODO: change to landing page before ship
     renderApp();
     $('#sign-in-submit').on('click', extractUserData);
+    $('#sign-up-submit').on('click', prepUserObject)
   }
   if(state.user.username){
     setRoute('budget-page');
@@ -317,6 +335,9 @@ function renderPage(source){
 
 function renderBudgetPage(){
   renderPage(PAGE_SOURCES[state.route]);
+  $.getJSON('/api/budgets', function(response){
+    console.log(response)
+	})
   renderIncomeInformation(state.budget);
   renderCategories(state.budget.categories);
   renderLogout();

@@ -1,6 +1,7 @@
 const express = require('express')
 const passport = require('passport')
 const bodyParser = require('body-parser')
+const Cookies = require('cookies-js');
 
 const router = express.Router();
 
@@ -9,19 +10,15 @@ const jsonParser = bodyParser.json();
 const {User} = require('./models');
 const {Budget, Category} = require('./')
 
-router.get('/:id', (req, res) => {
+router.get('/', (req, res) => {
 
-  const {userId, authToken} = req.cookies;
+  const userId = Cookies.get(userId);
 
   User
     .findById(userId)
     .populate({
       path: 'budget',
       model: 'Budget',
-      populate: {
-        path: 'categories',
-        model: 'Category'
-      }
     })
     .exec(function(err, doc){
       res.send(doc)
@@ -29,7 +26,7 @@ router.get('/:id', (req, res) => {
     .then(user => res.status(204).send('here'))
 })
 
-router.post('/newuser', jsonParser, (req, res) => {
+router.post('/', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password', 'email'];
   const missingField = requiredFields.find(field => !(field in req.body));
 

@@ -34,6 +34,7 @@
     "chai": "^4.1.0",
     "chai-http": "^3.0.0",
     "cookie-parser": "^1.4.3",
+    "cookies.js": "^2.1.15",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
@@ -46,6 +47,7 @@
     "morgan": "^1.8.2",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
-    "passport-jwt": "^3.0.0"
+    "passport-jwt": "^3.0.0",
+    "passport-local": "^1.0.0"
   }
 }
