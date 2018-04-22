@@ -266,6 +266,20 @@ function deleteCategory(event){
   renderCategories(state.budget.categories);
 }
 
+function logOut(event){
+
+
+  event.preventDefault();
+  $.ajax({
+    type: 'GET',
+    url: '/api/auth/logout',
+    success: function(){
+      setRoute('landing-page');
+      renderApp();
+    }
+  })
+}
+
 //auth functions
 
 function userLogin(userData){
@@ -274,7 +288,7 @@ function userLogin(userData){
   const {username, password} = userData;
 
   function handleSuccess(res){
-    toggleMenu();
+    console.log('success', state.route)
     updateUser({username});
     setRoute('budget-page');
     renderApp();
@@ -307,7 +321,7 @@ function renderStartPage(){
 
     setRoute('landing-page'); // TODO: change to landing page before ship
     renderApp();
-    $('#sign-in-submit').on('click', extractUserData);
+    $('#sign-in').on('submit', extractUserData);
     $('#sign-up-submit').on('click', prepUserObject)
   }
   if(username){
@@ -359,6 +373,8 @@ function renderDropDownMenu(){
     </div>
   `);
 
+  $('.drop-down-menu-container').html('')
+
   $('.drop-down-menu-container').append(`
     <div id="drop-down-menu" class="col-4 offset-8" hidden="true"><div>
   `);
@@ -370,10 +386,12 @@ function renderDropDownMenu(){
 
 function renderLogout(){
   $('#corner-container').html('');
+  $('.drop-down-menu-container').html('')
 
   $('#corner-container').append(`
     <button id="log-out-button">Log Out</button>
   `);
+  $('#log-out-button').on('click', logOut)
 }
 
 function renderLoginForm(){

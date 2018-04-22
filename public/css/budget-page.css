@@ -36,6 +36,14 @@
   color: #4EAA4E;
 }
 
+#amount-spent{
+  color: #B73D3D;
+}
+
+#remaining-funds{
+  color: #4EAA4E;
+}
+
 #amount-spent, #remaining-funds{
   font-size: 24px;
 }
@@ -128,4 +136,5 @@ select{
   width: 15%;
   border-radius: 5px;
 }
+
 
