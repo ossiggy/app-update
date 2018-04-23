@@ -118,6 +118,7 @@ function extractUserData(event){
 
 function prepUserObject(event){
   event.preventDefault();
+  console.log('prepping')
   newUser = {};
   newUser.username = $('#sign-up-username').val().trim('');
   newUser.password = $('#sign-up-password').val();
@@ -136,7 +137,8 @@ function prepUserObject(event){
   };
 
   function handleSuccess(){
-    userLogin(newUser.username, newUser.password);
+    const {username, password} = newUser
+    userLogin({username, password});
   }
 
   $.ajax(infoSettings)
