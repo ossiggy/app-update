@@ -12,6 +12,7 @@
   margin-top: 10px; 
   padding: 10px;
   border: 5px solid #3C3CFB;
+  box-shadow: 0px 2px 5px 0px black;
 }
 
 .income-container{
@@ -77,10 +78,12 @@ select{
   vertical-align: middle;
   height: 50px;
   background-color: #3C3CFB;
+  box-shadow: 0px 2px 5px 0px black;
 }
 
 .budget-container{
   background-color: white;
+  box-shadow: 0px 2px 5px 0px black;
 }
 
 .card-name, .card-amount{
@@ -135,6 +138,7 @@ select{
   height: 50px;
   width: 15%;
   border-radius: 5px;
+  box-shadow: 0px 2px 5px 0px black;
 }
 
 
