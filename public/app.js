@@ -321,7 +321,6 @@ function renderStartPage(){
 
     setRoute('landing-page'); // TODO: change to landing page before ship
     renderApp();
-    $('#sign-in').on('submit', extractUserData);
     $('#sign-up-submit').on('click', prepUserObject)
   }
   if(username){
@@ -399,7 +398,7 @@ function renderLoginForm(){
   const template = Handlebars.compile(source);
   const templatedForm = template(state);
   $('#drop-down-menu').append(templatedForm);
-
+  $('#sign-in').on('submit', extractUserData);
 }
 
 function renderIncomeInformation(income){
