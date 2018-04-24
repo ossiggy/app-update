@@ -53,7 +53,7 @@ router.put('/', jsonParser, (req, res) => {
     if (field in req.body) {
       toUpdate[field] = req.body[field]
     }
-  })
+  });
 
   Budget
     .findOneAndUpdate({_parent:userId}, {$set: toUpdate}, {new: true})
