@@ -10,11 +10,11 @@ const cors = require('cors');
 const passport = require('passport');
 require('dotenv').config();
 
-const {router: usersRouter} = require('./server/users');
-const {router: budgetRouter} = require('./server/budgets');
-const {router: authRouter, localStrategy, jwtStrategy} = require('./server/auth');
+const {router: usersRouter} = require('./routers/users');
+const {router: budgetRouter} = require('./routers/budgets');
+const {router: authRouter, localStrategy, jwtStrategy} = require('./routers/auth');
 
-const {DATABASE_URL, PORT} = require('./server/config');
+const {DATABASE_URL, PORT} = require('./routers/config');
 
 const app = express();
 
