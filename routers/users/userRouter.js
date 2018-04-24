@@ -9,21 +9,6 @@ const jsonParser = bodyParser.json();
 const {User} = require('./models');
 const {Budget} = require('./')
 
-router.get('/', (req, res) => {
-
-  const userId = req.cookies.userId;
-
-  User
-    .findById(userId)
-    .populate({
-      path: 'budget',
-      model: 'Budget',
-    })
-    .exec(function(err, doc){
-      res.send(doc)
-    })
-    .then(user => res.status(204).send('here'))
-})
 
 router.post('/', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password', 'email'];
