@@ -16,6 +16,8 @@ router.get('/', (req, res) => {
 
   const userId = req.cookies.userId;
 
+  console.log(req.cookies.userId)
+
     Budget
     .findOne({'_parent': userId})
     .then(budget => {
@@ -44,8 +46,6 @@ router.put('/', jsonParser, (req, res) => {
 
   const userId = req.cookies.userId
 
-  console.log(req.body)
-
   const toUpdate = {}
   const updateableFields = ['income', 'remaining', 'totalSpent', 'categories']
 
@@ -55,12 +55,10 @@ router.put('/', jsonParser, (req, res) => {
     }
   })
 
-  console.log(toUpdate)
-
   Budget
     .findOneAndUpdate({_parent:userId}, {$set: toUpdate}, {new: true})
     .exec()
-    .then(post => res.status(204).end())
+    .then(budget => res.status(204).end())
     .catch(err => res.status(500).json({message: 'Internal server error'}))
 })
 
