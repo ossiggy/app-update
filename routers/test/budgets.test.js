@@ -13,9 +13,10 @@ const {Budget} = require('../budgets/models')
 
 const testID = new ObjectID();
 
-mongoose.Promise = global.Promise
+mongoose.Promise = global.Promise;
 
-const should = chai.should()
+const should = chai.should();
+const expect = chai.expect;
 
 chai.use(chaiHttp)
 
@@ -94,13 +95,29 @@ describe('Budget router', () => {
     return closeServer()
   })
 
-  it("Should create a budget if none exists on GET", () => {
+  it.only("Should create a budget if none exists on GET", () => {
     let _res;
-    chai.request(app)
-    .get('/api/budgets')
+    return chai.request(app)
+    .get('/api/budgets/')
+    .set('Cookie', userId)
     .then(res => {
-      _res = res
-      console.log(res)
+      _res = res;
+      expect(res.body).to.be.a('object');
+      expect(res).to.be.json;
+      const expectedKeys = ['id', 'income', 'totalSpent', 'remaining', 'categories'];
+      expect(res.body).to.have.keys(expectedKeys);
+      const resBudget = res.body;
+      return Budget.findById(resBudget.id).exec()
+    }).then(budget =>{
+      const resBudget = _res.body;
+      expect(resBudget._parent).to.deep.equal(budget._parent);
+      expect(resBudget.id).to.deep.equal(budget.id);
+      expect(resBudget.income).to.deep.equal(budget.income);
+      expect(resBudget.remaining).to.deep.equal(budget.remaining);
+      expect(resBudget.totalSpent).to.deep.equal(budget.totalSpent);
+      for(let i=0; i<budget.categories.length; i++){
+        expect(resBudget.categories[i]).to.deep.equal(budget.categories[i])
+      }
     })
 
   })
