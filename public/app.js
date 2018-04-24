@@ -118,12 +118,10 @@ function extractUserData(event){
 
 function prepUserObject(event){
   event.preventDefault();
-  console.log('prepping')
   newUser = {};
   newUser.username = $('#sign-up-username').val().trim('');
   newUser.password = $('#sign-up-password').val();
   newUser.email = $('#sign-up-email').val();
-  console.log(newUser)
 
   const infoSettings = {
     url: '/api/users/',
@@ -185,7 +183,13 @@ function saveBudget(event){
   })
 
   function handleSuccess(){
-    alert('success')
+    $.toast({
+      heading: 'Success',
+      text: ' Budget saved!',
+      showHideTransition: 'slide',
+      icon: 'success',
+      position: 'top-center'
+    });
   }
 
 };
@@ -195,12 +199,19 @@ function editIncome(event){
   Object.assign(state, {incomeEditing:!state.incomeEditing})
   if(state.incomeEditing){
     $('#edit-income').html('<i class="fas fa-check-square fa-3x">');
-    $('#monthly-income-number').attr('contenteditable', 'true'); 
+    $('#monthly-income-number').attr('contenteditable', 'true');
+    $("div[contenteditable]").on('keypress', function (evt) {
+      
+        var keycode = evt.charCode || evt.keyCode;
+        if (keycode  == 13) { 
+          return false;
+        }
+      }); 
   };
   if(!state.incomeEditing){
     $('#edit-income').html('<i class="fas fa-pen-square fa-3x">');
     $('#monthly-income-number').attr('contenteditable', 'false');
-    let newAmount = Number($('#monthly-income-number').html());
+    let newAmount = Number($('#monthly-income-number').html().trim(''));
     if(isNaN(newAmount)){
       $.toast({
         heading: 'Error',
@@ -229,11 +240,19 @@ function editCategory(event){
   if(state.categoryEditing){
     _this.html('<i class="fas fa-check-square fa-3x">');
     cardAmount.attr('contenteditable', 'true');
+    $("div[contenteditable]").on('keypress', function (evt) {
+      
+        var keycode = evt.charCode || evt.keyCode;
+        if (keycode  == 13) { 
+          return false;
+        }
+      });
   };
   if(!state.categoryEditing){
     _this.html('<i class="fas fa-pen-square fa-3x">');
     cardAmount.attr('contenteditable', 'false');
-    let newAmount = cardAmount.html();
+    let newAmount = cardAmount.html().trim();
+    console.log(newAmount)
     if(isNaN(newAmount)){
       $.toast({
         heading: 'Error',
@@ -290,7 +309,6 @@ function userLogin(userData){
   const {username, password} = userData;
 
   function handleSuccess(res){
-    console.log('success', state.route)
     updateUser({username});
     setRoute('budget-page');
     renderApp();
@@ -354,7 +372,6 @@ function renderBudgetPage(){
   $.getJSON('/api/budgets', {cookie: userId}, function(res){
     Object.assign(state.budget, res)
   }).then(() => {
-    console.log(state.budget);
     renderPage(PAGE_SOURCES[state.route]);
     renderIncomeInformation(state.budget);
     renderCategories(state.budget.categories);

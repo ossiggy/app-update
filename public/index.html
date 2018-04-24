@@ -2,7 +2,8 @@
 
 <html>
 
-  <head>      
+  <head>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />      
     <link rel="stylesheet" href="/css/landing-page.css">
     <link rel="stylesheet" href="/css/budget-page.css">
     <link rel="stylesheet" href="/css/header.css">
@@ -86,7 +87,7 @@
 
     <script id="finance-info-template" type="text/x-handlebars-template">
       <div class="income-container col-12">
-        <span id="income">Monthly Income: $<div id="monthly-income-number">{{income}}</div></span>
+        <span id="income">Monthly Income: $<div id="monthly-income-number" class="single-line">{{income}}</div></span>
         <button type="button" id="edit-income"><i class="fas fa-pen-square fa-3x"></i></button>
       </div>
       <span class="funds col-6" id="amount-spent">Amount Spent: $ {{totalSpent}}</span>
@@ -97,7 +98,7 @@
       <div class="budget-card col-12">
         <div class="card-info-container col-6">
           <div class="card-name col-6">{{name}}</div>
-          <div class="card-amount col-6">{{amount}}</div>
+          <div class="card-amount col-6 single-line">{{amount}}</div>
         </div>
         <div class="button-container col-6">
           <button class="delete-category col-6"><i class="fas fa-trash fa-3x"></i></button>
