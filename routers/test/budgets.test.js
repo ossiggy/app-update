@@ -55,11 +55,12 @@ describe('Budget router', () => {
 
   function createBlankBudget(){
     console.log('creating blank budget');
+    // will use agent multiple times to persist the cookie generated on login through the next request
     let agent = chai.request.agent(app)
     return agent
        .post('/api/auth/login')
        .send({ username: 'username', password: 'password' })
-       .then(function (res) {
+       .then(res => {
          expect(res).to.have.cookie('userId');
          return agent.get('/api/budgets')
         .then(()=> updateBudget())
@@ -71,7 +72,7 @@ describe('Budget router', () => {
     return agent
        .post('/api/auth/login')
        .send({ username: 'username', password: 'password' })
-       .then(function (res) {
+       .then(res => {
          expect(res).to.have.cookie('userId');
          return agent.put('/api/budgets')
         .send({'income':'100'});
@@ -100,7 +101,7 @@ describe('Budget router', () => {
     return agent
        .post('/api/auth/login')
        .send({ username: 'username', password: 'password' })
-       .then(function (res) {
+       .then(res => {
          expect(res).to.have.cookie('userId');
          return agent.get('/api/budgets')
         .then(res => {
@@ -134,7 +135,7 @@ describe('Budget router', () => {
         return agent
            .post('/api/auth/login')
            .send({ username: 'username', password: 'password' })
-           .then(function (res) {
+           .then(res => {
              expect(res).to.have.cookie('userId');
              return agent.get('/api/budgets')
               .then(res => {
@@ -169,7 +170,7 @@ describe('Budget router', () => {
         return agent
            .post('/api/auth/login')
            .send({ username: 'username', password: 'password' })
-           .then(function (res) {
+           .then(res => {
              expect(res).to.have.cookie('userId');
              return agent.put('/api/budgets')
              .send(updateable)

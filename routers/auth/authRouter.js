@@ -26,7 +26,6 @@ router.post('/login', localAuth, (req, res) => {
     res.cookie('userId', id);
     res.cookie('authToken', authToken);
     res.cookie('username', username);
-    
     res.json({username, id});
   }
 );

@@ -8,7 +8,9 @@ const state = {
     income: 0,
     totalSpent: 0,
     remaining: 0,
-    categories: []
+    categories: [],
+    expenseTotal:0,
+    savingsTotal:0
   },
   route: null,
   incomeEditing: false,
@@ -50,6 +52,16 @@ function budgetCalculations(){
     totalSpent:totalSpent,
     remaining:remaining,
   })
+
+  for(let i=0; i<categories.length; i++){
+    let category = categories[i];
+    if(category.type === 'Expense'){
+      state.expenseTotal += category.amount;
+    }
+    if(category.type === 'Savings'){
+      state.savingsTotal += category.amount;
+    }
+  }
 }
 
 function updateUser(object){
@@ -308,7 +320,7 @@ function userLogin(userData){
   const loginURL = '/api/auth/login';
   const {username, password} = userData;
 
-  function handleSuccess(res){
+  function handleSuccess(){
     updateUser({username});
     setRoute('budget-page');
     renderApp();
@@ -323,7 +335,16 @@ function userLogin(userData){
     url: loginURL,
     data: data,
     beforeSend: setHeader,
-    success:handleSuccess
+    success:handleSuccess,
+    error: () => {
+      $.toast({
+        heading: 'Error',
+        text: ' Invalid Username or Password',
+        showHideTransition: 'fade',
+        icon: 'error',
+        position: 'top-center'
+      });
+    }
   };
   $.ajax(infoSettings)
 }
@@ -355,7 +376,6 @@ function renderApp(){
     renderDropDownMenu();
   };
   if(state.route === 'budget-page'){
-    // fetchBudget(state.user.userId); TODO: hook up actions to server
     renderBudgetPage();
   }
 };
