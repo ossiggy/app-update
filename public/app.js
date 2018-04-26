@@ -300,8 +300,6 @@ function deleteCategory(event){
 }
 
 function logOut(event){
-
-
   event.preventDefault();
   $.ajax({
     type: 'GET',
@@ -311,6 +309,10 @@ function logOut(event){
       renderApp();
     }
   })
+}
+
+function demoMode(event){
+  userLogin({username: 'demomode', password: 'password'});
 }
 
 //auth functions
@@ -406,6 +408,7 @@ function renderDropDownMenu(){
   $('#corner-container').html('');
 
   $('#corner-container').append(`
+  <button type="button" id="demo-button">Demo</button>
     <div id="menu-bars-container">
       <i id="menu-bars" class="fas fa-bars fa-3x"></i>
     </div>
@@ -417,7 +420,8 @@ function renderDropDownMenu(){
     <div id="drop-down-menu" class="col-4 offset-8" hidden="true"><div>
   `);
   $('#menu-bars-container').mouseenter(toggleMenu);
-  $('#drop-down-menu').mouseleave(toggleMenu)
+  $('#drop-down-menu').mouseleave(toggleMenu);
+  $('#demo-button').on('click', demoMode);
   renderLoginForm();
 }
 
