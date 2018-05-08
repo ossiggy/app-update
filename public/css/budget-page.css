@@ -37,6 +37,11 @@
   color: #4EAA4E;
 }
 
+#category-type{
+  border: 1px solid lightgray;
+  width: 100px;
+}
+
 #amount-spent{
   color: #B73D3D;
 }
@@ -128,16 +133,23 @@ select{
   color: #B73D3D !important;
 }
 
+.delete-category, .edit-category{
+  width: 50%;
+}
+
 .save-budget-container{
   margin-top: 10px;
 }
 
 #save-budget{
-  color: #3C3CFB;
+  color: white;
+  background-color: #00AB00;
   font-size: 20px;
   height: 50px;
-  width: 15%;
+  width: 50%;
+  border: 5px solid #00AB00;
   border-radius: 5px;
+  margin-bottom: 10px;
   box-shadow: 0px 2px 5px 0px black;
 }
 

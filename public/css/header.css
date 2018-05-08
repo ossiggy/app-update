@@ -51,7 +51,7 @@ h2{
   padding-bottom:5px;
 }
 
-@media screen and (max-width: 470px){
+@media screen and (max-width: 595px){
   .sub-title{
     display: none;
   }
@@ -84,6 +84,7 @@ h2{
 
 
 #drop-down-menu{
+  padding-right: 10px;
   height: 200px;
   position: absolute;
   width: 250px;
@@ -139,4 +140,10 @@ h2{
   color: white;
   border: 2px solid white;
   background-color: #3942FF;
+}
+
+@media screen and (max-width: 420px){
+  #demo-button{
+    width: 70px;
+  }
 }

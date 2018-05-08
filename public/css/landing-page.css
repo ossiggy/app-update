@@ -27,8 +27,8 @@
 
 .list-container{
   padding: 10px;
-  padding-top:50px;
-  padding-bottom: 50px;
+  padding-top:40px;
+  padding-bottom: 40px;
   background-color: #3942FF;
   text-shadow: 0 1px 1px black;
   text-align: center;
@@ -40,7 +40,7 @@ ul{
 
 .sign-up-area{
   background-color: white;
-  height: 95vh;
+  height: 85vh;
   box-shadow: 0px 2px 5px 0px black;
 }
 
@@ -62,7 +62,7 @@ ul{
 h4{
   color: #3942FF;
   border: 3px solid #3942FF;
-  font-size: 40px;
+  font-size: 30px;
   padding-bottom: 5px;
   margin-top: 10px;
   margin-left: 2.5px;
@@ -95,4 +95,26 @@ h4{
     text-align:center;
     margin-left: 25%;
   }
+}
+
+@media screen and (max-width:722px){
+  .sign-up-area{
+    height: 95vh;
+  }
+}
+
+@media screen and (max-width: 395px){
+  .list-container{
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .sign-up-area h3{
+    font-size: 28px;
+  }
+
+  h4{
+    font-size: 20px;
+  }
+
 }

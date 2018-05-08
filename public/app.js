@@ -420,6 +420,7 @@ function renderDropDownMenu(){
     <div id="drop-down-menu" class="col-4 offset-8" hidden="true"><div>
   `);
   $('#menu-bars-container').mouseenter(toggleMenu);
+  $('#menu-bars-container').on('click', toggleMenu);
   $('#drop-down-menu').mouseleave(toggleMenu);
   $('#demo-button').on('click', demoMode);
   renderLoginForm();
