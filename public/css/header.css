@@ -147,3 +147,9 @@ h2{
     width: 70px;
   }
 }
+@media screen and (max-width: 360px){
+  #demo-button{
+    width: 50px !important;
+    right: 70px !important;
+  }
+}
